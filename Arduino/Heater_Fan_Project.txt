@@ -1,0 +1,62 @@
+Create a device that would monitor the temperature of a fireplace insert and cycle circulating fans to automatically move air around the room when the temperature exceeded a preset threshold.
+
+Hardware:
+Arduino Uno
+12v power supply
+1 Channel relay module (5v - 250v/10A)
+4 - 12v - 75mm Cooling fans (rated at .26 amps)
+TMP36 temperature sensor
+20ft Ethernet cable
+Mounting rail for cooling fans
+Wiring block for voltage distribution to fans (fan side)
+Small cardboard box to mount Arduino and relay module into (power side)
+
+Tools:
+Soldering iron
+Solder
+Heat shrink tubing (optional)
+Various wires to hookup the components
+
+
+This describes the hardware setup:
+Arduino side (away from heat source and near wall power):
+    The 12v power supply plugs into the wall outlet (120v).
+    The 12v side of the power supply powers the Arduino's external power port.
+    The 12v power supply ran one leg through the relay module.
+    The Arduino switched the fans off and on using the relay.
+
+Fan / temperature sensor side (directly behind stove):
+    The TMP36 temperature sensor is co-located with the fans behind the wood stove.
+
+
+Ethernet cable was used to:
+    1. Send voltage down to the fans and temperature sensor
+    2. Monitor data from the temperature sensor
+
+
+Pseudocode:
+Capture readings from the temperature sensor every second and add the results to an accumulator for 3 minutes.
+If the average of the readings (number of readings / number of seconds) exceeds the preset power on threshold
+    Power on the fans
+    Clear the accumulator and restart monitoring the temp sensor
+If the average does not exceed the preset power on threshold
+    Clear the accumulator and restart monitoring the temp sensor
+
+
+Challenges:
+Have you ever tried to use a cordless drill to make a hole in a small fan case without running the bit into the fan blade?
+It is not as easy as you might imagine.
+I had originally intended to power the Arduino using a wall wart with 5v power.
+However, when the relay was switched on, it sufficiently altered the power going to the temperature sensor that the readings were skewed.
+This is not critical since I could have changed the monitor threshold as a result.
+
+
+Conclusion:
+System works as designed.
+A single pair was used to carry the 12v to the fans. I was worried this may not be able to carry the amperage needed to power the 4 - 12v fans.
+The ethernet cable did not experience any heat issues that I could detect.
+However, providing 12v to the Arduino seemed to make the external power port warm.
+During idle, the corner of the PCB that received the 12v ran at 90 degrees fahrenheit.
+During operation that same corner ran at 120 degrees fahrenheit.
+
+
